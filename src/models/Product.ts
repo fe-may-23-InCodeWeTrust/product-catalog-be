@@ -77,4 +77,4 @@ export class Product extends Model {
     type: DataType.STRING,
   })
     image: string;
-};
+}
