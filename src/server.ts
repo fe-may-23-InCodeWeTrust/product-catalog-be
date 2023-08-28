@@ -9,7 +9,12 @@ const { CLIENT_URL, PORT } = process.env;
 
 const app = express();
 
-app.use(cors({ origin: CLIENT_URL })).use(express.json());
+app
+  .use(cors({ origin: CLIENT_URL }))
+  .use(express.json())
+  .use('/', (req, res) => {
+    res.send('product catalog server');
+  });
 
 app.listen(PORT, () => {
   console.log(`API is running on http://localhost:${PORT}`);
