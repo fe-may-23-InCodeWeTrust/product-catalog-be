@@ -3,24 +3,31 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { sequelize } from './utils/db';
-import { Product } from './models';
+import { Product } from './models/Product';
 
 dotenv.config();
 
-const { CLIENT_URL, PORT } = process.env;
+const { PORT } = process.env;
 
 const app = express();
 
-sequelize.authenticate();
+app.use(cors()).use(express.json());
 
-app
-  .use(cors({ origin: CLIENT_URL }))
-  .use(express.json());
+sequelize.authenticate().then(() => {
+  console.log('Connection has been established successfully.');
+})
+  .catch(error => {
+    console.error('Unable to connect to the database: ', error);
+  });
+
+sequelize.sync();
+
+app.use(express.static('public'));
 
 app.use('/products', async(req, res) => {
-  const products = await Product.findAll();
+  const result = await Product.findAll();
 
-  res.send(products);
+  res.send(result);
 });
 
 app.listen(PORT, () => {

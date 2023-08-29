@@ -13,4 +13,7 @@ node_modules
 
 .env
 
+/public
+
+src/resetDB.ts
 
