@@ -14,15 +14,13 @@ export const getProductList = async(
   req: Request,
   res: Response,
 ): Promise<void> => {
-  const {
-    offset = '0',
-    limit = '16',
-    productType,
-  } = req.query;
+  const { offset = '0', limit = '16', productType, order = 'newest' } = req.query;
 
-  if (typeof offset !== 'string'
-  || typeof limit !== 'string'
-  || typeof productType !== 'string'
+  if (
+    typeof offset !== 'string'
+    || typeof limit !== 'string'
+    || typeof order !== 'string'
+    || typeof productType !== 'string'
   ) {
     res.sendStatus(422);
 
@@ -35,12 +33,29 @@ export const getProductList = async(
     return;
   }
 
+  let orderBy = [];
+
+  switch (order) {
+    case 'newest':
+      orderBy = ['year', 'DESC'];
+      break;
+    case 'cheapest':
+      orderBy = ['price', 'ASC'];
+      break;
+    case 'popular':
+      orderBy = [{ raw: 'FullPrice - price DESC' }];
+      break;
+  }
+
   const products = await Product.findAll({
     offset: +offset,
     limit: +limit,
     where: {
       category: productType,
     },
+    order: [
+      orderBy,
+    ],
   });
 
   res.send(products);
@@ -52,7 +67,7 @@ export const getNewProducts = async(
 ): Promise<void> => {
   const products = await Product.findAll();
   const newProducts = products
-    .sort((a: ProductType, b: ProductType) => b.year - a.year)
+    .sort((a:ProductType, b:ProductType) => b.year - a.year)
     .slice(0, 12);
 
   res.send(newProducts);
@@ -65,7 +80,7 @@ export const getDiscountedProducts = async(
   const products = await Product.findAll();
   const discountedPhones = products
     .sort(
-      (a: ProductType, b: ProductType) =>
+      (a:ProductType, b:ProductType) =>
         b.fullPrice - b.price - (a.fullPrice - a.price),
     )
     .slice(0, 12);

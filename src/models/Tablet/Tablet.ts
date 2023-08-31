@@ -1,8 +1,8 @@
 import { Model, Column, Table, DataType } from 'sequelize-typescript';
 
 interface Description {
-  title: string
-  text: string[]
+  title: string;
+  text: string[];
 }
 
 @Table({
@@ -15,112 +15,112 @@ export class Tablet extends Model {
     type: DataType.STRING,
     primaryKey: true,
   })
-    id: string;
+  id: string;
 
   @Column({
     type: DataType.STRING,
   })
-    category: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-    namespaceId: string;
+  category: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-    name: string;
+  namespaceId: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  name: string;
 
   @Column({
     type: DataType.ARRAY(DataType.STRING),
     allowNull: false,
   })
-    capacityAvailable: string[];
+  capacityAvailable: string[];
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-    capacity: string;
+  capacity: string;
 
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
-    priceRegular: number;
+  priceRegular: number;
 
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
-    priceDiscount: number;
+  priceDiscount: number;
 
   @Column({
     type: DataType.ARRAY(DataType.STRING),
     allowNull: false,
   })
-    colorsAvailable: string[];
+  colorsAvailable: string[];
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-    color: string;
+  color: string;
 
   @Column({
     type: DataType.TEXT,
     allowNull: false,
   })
-    images: string[];
+  images: string[];
 
   @Column({
     type: DataType.TEXT,
     allowNull: false,
   })
-    description: Description[];
+  description: Description[];
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-    screen: string;
+  screen: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-    resolution: string;
+  resolution: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-    processor: string;
+  processor: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-    ram: string;
+  ram: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: true,
   })
-    camera: string;
+  camera: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-    zoom: string;
+  zoom: string;
 
   @Column({
     type: DataType.ARRAY(DataType.STRING),
     allowNull: false,
   })
-    cell: string[];
+  cell: string[];
 }

@@ -16,67 +16,67 @@ export class Product extends Model {
   @Column({
     type: DataType.STRING,
   })
-    category: string;
+  category: string;
 
   @AllowNull(false)
   @Column({
     type: DataType.STRING,
   })
-    itemId: string;
+  itemId: string;
 
   @AllowNull(false)
   @Column({
     type: DataType.STRING,
   })
-    name: string;
+  name: string;
 
   @AllowNull(false)
   @Column({
     type: DataType.INTEGER,
   })
-    fullPrice: number;
+  fullPrice: number;
 
   @AllowNull(false)
   @Column({
     type: DataType.INTEGER,
   })
-    price: number;
+  price: number;
 
   @AllowNull(false)
   @Column({
     type: DataType.STRING,
   })
-    screen: string;
+  screen: string;
 
   @AllowNull(false)
   @Column({
     type: DataType.STRING,
   })
-    capacity: string;
+  capacity: string;
 
   @AllowNull(false)
   @Column({
     type: DataType.STRING,
   })
-    color: string;
+  color: string;
 
   @AllowNull(false)
   @Column({
     type: DataType.STRING,
   })
-    ram: string;
+  ram: string;
 
   @AllowNull(false)
   @Column({
     type: DataType.INTEGER,
   })
-    year: number;
+  year: number;
 
   @AllowNull(false)
   @Column({
     type: DataType.STRING,
   })
-    image: string;
+  image: string;
 }
 
 export default Product;
