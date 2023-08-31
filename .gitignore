@@ -11,9 +11,5 @@ node_modules
 #production
 /build
 
-.env
-
-/public
-
 src/resetDB.ts
 

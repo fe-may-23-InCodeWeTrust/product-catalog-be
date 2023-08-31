@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/server.ts",
-    "start": "ts-node src/server.ts",
-    "build": "tsc",
+    "start": "node build/server.js",
+    "build": "npm run db-migrate; tsc",
     "prepare": "husky install",
     "format": "prettier --write . --ignore-path .gitignore",
     "lint": "eslint **/*.ts --ignore-path .gitignore",
-    "fix": "npm run format && npm run lint -- --fix"
+    "fix": "npm run format && npm run lint -- --fix",
+    "db-migrate": "sequelize-cli db:migrate",
+    "db-seed": "npx sequelize db:seed:all"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +28,7 @@
     "mysql2": "^3.6.0",
     "pg": "^8.11.3",
     "pg-hstore": "^2.3.4",
+    "psql": "^0.0.1",
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.32.1",
     "sequelize-typescript": "^2.1.5",

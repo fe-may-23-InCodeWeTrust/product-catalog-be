@@ -3,40 +3,21 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const { PASSWORD, USERNAME, DB_NAME, DB_HOST, DB_PORT } = process.env;
+const { PASSWORD, USERNAME, DB_NAME, DB_HOST } = process.env;
+const URI = `postgres://${USERNAME}:${PASSWORD}@${DB_HOST}/${DB_NAME}`;
+
+const settings = {
+  url: URI,
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+  },
+};
 
 module.exports = {
-  development: {
-    username: USERNAME,
-    password: PASSWORD,
-    database: DB_NAME,
-    host: DB_HOST,
-    port: DB_PORT,
-    dialect: 'postgres',
-    dialectOptions: {
-      ssl: true,
-    },
-  },
-  test: {
-    username: USERNAME,
-    password: PASSWORD,
-    database: DB_NAME,
-    host: DB_HOST,
-    port: DB_PORT,
-    dialect: 'postgres',
-    dialectOptions: {
-      ssl: true,
-    },
-  },
-  production: {
-    username: USERNAME,
-    password: PASSWORD,
-    database: DB_NAME,
-    host: DB_HOST,
-    port: DB_PORT,
-    dialect: 'postgres',
-    dialectOptions: {
-      ssl: true,
-    },
-  },
+  development: { ...settings },
+  test: { ...settings },
+  production: { ...settings },
 };
