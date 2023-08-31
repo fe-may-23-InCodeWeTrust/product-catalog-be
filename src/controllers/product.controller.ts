@@ -50,13 +50,16 @@ export const getProductList = async(
       break;
   }
 
-  const products = await Product.findAll({
+  const products = await Product.findAndCountAll({
     offset: +offset,
     limit: +limit,
     where: {
       category: productType,
     },
-    order: order === 'popular' ? Sequelize.literal('("fullPrice" - "price") DESC') : [orderBy],
+    order:
+      order === 'popular'
+        ? Sequelize.literal('("fullPrice" - "price") DESC')
+        : [orderBy],
   });
 
   res.send(products);
