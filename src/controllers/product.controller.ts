@@ -7,6 +7,7 @@
 import type { Request, Response } from 'express';
 import type { ProductType } from '../types';
 import { Product } from '../models/Product';
+import { Sequelize } from 'sequelize';
 
 const productTypeOptions = ['phones', 'tablets', 'accessories'];
 
@@ -14,7 +15,12 @@ export const getProductList = async(
   req: Request,
   res: Response,
 ): Promise<void> => {
-  const { offset = '0', limit = '16', productType, order = 'newest' } = req.query;
+  const {
+    offset = '0',
+    limit = '16',
+    productType,
+    order = 'newest',
+  } = req.query;
 
   if (
     typeof offset !== 'string'
@@ -42,9 +48,6 @@ export const getProductList = async(
     case 'cheapest':
       orderBy = ['price', 'ASC'];
       break;
-    case 'popular':
-      orderBy = [{ raw: 'FullPrice - price DESC' }];
-      break;
   }
 
   const products = await Product.findAll({
@@ -53,9 +56,7 @@ export const getProductList = async(
     where: {
       category: productType,
     },
-    order: [
-      orderBy,
-    ],
+    order: order === 'popular' ? Sequelize.literal('("fullPrice" - "price") DESC') : [orderBy],
   });
 
   res.send(products);
@@ -67,7 +68,7 @@ export const getNewProducts = async(
 ): Promise<void> => {
   const products = await Product.findAll();
   const newProducts = products
-    .sort((a:ProductType, b:ProductType) => b.year - a.year)
+    .sort((a: ProductType, b: ProductType) => b.year - a.year)
     .slice(0, 12);
 
   res.send(newProducts);
@@ -80,7 +81,7 @@ export const getDiscountedProducts = async(
   const products = await Product.findAll();
   const discountedPhones = products
     .sort(
-      (a:ProductType, b:ProductType) =>
+      (a: ProductType, b: ProductType) =>
         b.fullPrice - b.price - (a.fullPrice - a.price),
     )
     .slice(0, 12);
