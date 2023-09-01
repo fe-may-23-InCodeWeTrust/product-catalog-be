@@ -3,10 +3,10 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { sequelize } from './utils/db';
-import { Phone } from './models/Phone';
-import { Tablet } from './models/Tablet';
-import { Accessory } from './models/Accessory';
 import { productRoutes } from './routes/product.routes';
+import { phoneRoutes } from './routes/phone.routes';
+import { tabletRoutes } from './routes/tablet.routes';
+import { accessoryRoutes } from './routes/accessory.routes';
 
 dotenv.config();
 
@@ -31,23 +31,11 @@ app.use(express.static('public'));
 
 app.use('/products', productRoutes);
 
-app.use('/phones', async(req, res) => {
-  const result = await Phone.findAll();
+app.use('/phones', phoneRoutes);
 
-  res.send(result);
-});
+app.use('/tablets', tabletRoutes);
 
-app.use('/tablets', async(req, res) => {
-  const result = await Tablet.findAll();
-
-  res.send(result);
-});
-
-app.use('/accessories', async(req, res) => {
-  const result = await Accessory.findAll();
-
-  res.send(result);
-});
+app.use('/accessories', accessoryRoutes);
 
 app.listen(PORT, () => {
   console.log(`API is running on http://localhost:${PORT}`);
