@@ -70,9 +70,7 @@ export const getNewProducts = async(
 ): Promise<void> => {
   const products = await Product.findAll({
     limit: 12,
-    order: [
-      ['year', 'DESC'],
-    ],
+    order: [['year', 'DESC']],
   });
 
   res.send(products);
