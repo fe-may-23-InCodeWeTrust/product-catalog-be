@@ -10,7 +10,7 @@ import { Sequelize } from 'sequelize';
 
 const productTypeOptions = ['phones', 'tablets', 'accessories'];
 
-export const getProductList = async(
+export const getProductList = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
@@ -22,10 +22,10 @@ export const getProductList = async(
   } = req.query;
 
   if (
-    typeof offset !== 'string'
-    || typeof limit !== 'string'
-    || typeof order !== 'string'
-    || typeof productType !== 'string'
+    typeof offset !== 'string' ||
+    typeof limit !== 'string' ||
+    typeof order !== 'string' ||
+    typeof productType !== 'string'
   ) {
     res.sendStatus(422);
 
@@ -64,7 +64,7 @@ export const getProductList = async(
   res.send(products);
 };
 
-export const getNewProducts = async(
+export const getNewProducts = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
@@ -76,7 +76,7 @@ export const getNewProducts = async(
   res.send(products);
 };
 
-export const getDiscountedProducts = async(
+export const getDiscountedProducts = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
