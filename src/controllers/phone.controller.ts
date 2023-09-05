@@ -7,7 +7,7 @@ import type { Request, Response } from 'express';
 export const getOneProductById = async(
   req: Request,
   res: Response,
-) : Promise<void> => {
+): Promise<void> => {
   const { phoneId } = req.params;
 
   const foundProduct = await getOnePhone(phoneId);

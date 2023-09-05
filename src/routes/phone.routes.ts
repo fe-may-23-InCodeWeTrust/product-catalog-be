@@ -1,7 +1,5 @@
 import express from 'express';
-import {
-  getOneProductById,
-} from '../controllers/phone.controller';
+import { getOneProductById } from '../controllers/phone.controller';
 
 export const phoneRoutes = express.Router();
 

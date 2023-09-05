@@ -4,10 +4,10 @@ import { Product } from '../models/Product';
 import { getOneTablet } from '../services/products.service';
 import type { Request, Response } from 'express';
 
-export const getOneTabletById = async(
+export const getOneTabletById = async (
   req: Request,
   res: Response,
-) : Promise<void> => {
+): Promise<void> => {
   const { tabletId } = req.params;
 
   const foundProduct = await getOneTablet(tabletId);

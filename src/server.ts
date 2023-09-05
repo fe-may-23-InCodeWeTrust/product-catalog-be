@@ -7,6 +7,7 @@ import { productRoutes } from './routes/product.routes';
 import { phoneRoutes } from './routes/phone.routes';
 import { tabletRoutes } from './routes/tablet.routes';
 import { accessoryRoutes } from './routes/accessory.routes';
+import { usersRoutes } from './routes/users.routes';
 
 dotenv.config();
 
@@ -36,6 +37,8 @@ app.use('/phones', phoneRoutes);
 app.use('/tablets', tabletRoutes);
 
 app.use('/accessories', accessoryRoutes);
+
+app.use('/users', usersRoutes);
 
 app.listen(PORT, () => {
   console.log(`API is running on http://localhost:${PORT}`);

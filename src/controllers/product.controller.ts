@@ -64,14 +64,22 @@ export const getProductList = async(
   res.send(products);
 };
 
-export const getOneProduct = async(req: Request,
-  res: Response): Promise<void> => {
+export const getOneProduct = async(
+  req: Request,
+  res: Response,
+): Promise<void> => {
   const { id } = req.params;
   const product = await Product.findOne({
     where: {
       itemId: id,
     },
   });
+
+  if (!product) {
+    res.sendStatus(404);
+
+    return;
+  }
 
   res.send(product);
 };

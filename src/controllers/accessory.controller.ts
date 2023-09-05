@@ -4,10 +4,10 @@ import { Product } from '../models/Product';
 import { getOneAccessory } from '../services/products.service';
 import type { Request, Response } from 'express';
 
-export const getOneAccessoryById = async(
+export const getOneAccessoryById = async (
   req: Request,
   res: Response,
-) : Promise<void> => {
+): Promise<void> => {
   const { accessoryId } = req.params;
 
   const foundProduct = await getOneAccessory(accessoryId);
