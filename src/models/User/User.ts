@@ -34,5 +34,5 @@ export class User extends Model {
     type: DataType.STRING,
     allowNull: true,
   })
-  favorites: ProductType[];
+  favorites: string;
 }

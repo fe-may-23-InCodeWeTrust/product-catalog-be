@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import { generateAccessToken } from '../services/products.service';
 import { v4 as uuidv4 } from 'uuid';
+import { ProductType } from '../types';
 
 dotenv.config();
 
@@ -40,16 +41,16 @@ export const getOneUserById = async(
   const isMatch = await bcrypt.compare(password, hashedPassword);
 
   if (!isMatch) {
-    res.sendStatus(400).send({ msg: 'Invalid Email Or Password' });
+    res.sendStatus(400);
 
     return;
   }
 
   const resEmail = foundUser.email;
-  const favorites = foundUser.favorites;
+  const resId = foundUser.id;
   const token = generateAccessToken(resEmail);
 
-  res.send({ token, user: resEmail, favorites });
+  res.send({ token, user: resEmail, id: resId });
 };
 
 export const createUser = async(
@@ -90,27 +91,45 @@ export const createUser = async(
   res.send({ message: 'Thanks for registering' });
 };
 
+export const getFavorites = async(req: Request,
+  res: Response): Promise<void> => {
+  const { userId } = req.params;
+
+  console.log(userId);
+
+  const foundUser = await User.findOne({
+    where: {
+      id: userId,
+    },
+  });
+
+  if (!foundUser) {
+    res.sendStatus(404);
+
+    return;
+  }
+
+  const favorites = foundUser.favorites;
+
+  res.send(favorites);
+};
+
 export const updateFavorites = async(
   req: Request,
   res: Response,
 ): Promise<void> => {
-  const { email } = req.body;
-
-  const user = await User.findOne({ where: { email } });
-
-  if (!user) {
-    res
-      .sendStatus(404)
-      .send({ message: 'Please login to add some goods to favorites' });
-  }
+  const { userId } = req.query;
 
   const { body } = req;
 
-  if (user) {
-    user.favorites = body;
-  }
+  const prepared = body.map((el: ProductType) => el.itemId);
 
-  await user?.save();
+  await User.update({
+    favorites: JSON.stringify(prepared),
+  },
+  { where: {
+    id: userId,
+  } });
 
   res.send('Favorites were added');
 };

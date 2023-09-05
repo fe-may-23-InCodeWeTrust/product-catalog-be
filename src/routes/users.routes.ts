@@ -3,8 +3,9 @@ import {
   createUser,
   getOneUserById,
   updateFavorites,
+  getFavorites,
 } from '../controllers/user.controller';
-import { authenticateToken } from '../services/products.service';
+// import { authenticateToken } from '../services/products.service';
 
 export const usersRoutes = express.Router();
 
@@ -12,4 +13,6 @@ usersRoutes.post('/register', createUser);
 
 usersRoutes.get('/login', getOneUserById);
 
-usersRoutes.patch('/favorites', authenticateToken, updateFavorites);
+usersRoutes.get('/:userId', getFavorites);
+
+usersRoutes.patch('/favorites', updateFavorites);
