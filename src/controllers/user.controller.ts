@@ -62,7 +62,7 @@ export const createUser = async (
     return;
   }
 
-  const alreadyExistsUser = await User.findOne({ where: { email } });
+  const alreadyExistsUser = await User.findAll({ where: { email } });
 
   if (alreadyExistsUser) {
     res.sendStatus(409).send({ message: 'User with email already exists!' });
