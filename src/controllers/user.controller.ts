@@ -9,7 +9,7 @@ import { generateAccessToken } from '../services/products.service';
 
 dotenv.config();
 
-export const getOneUserById = async (
+export const getOneUserById = async(
   req: Request,
   res: Response,
 ): Promise<void> => {
@@ -50,7 +50,7 @@ export const getOneUserById = async (
   res.send({ token, user: resEmail, favorites });
 };
 
-export const createUser = async (
+export const createUser = async(
   req: Request,
   res: Response,
 ): Promise<void> => {
@@ -62,10 +62,10 @@ export const createUser = async (
     return;
   }
 
-  const alreadyExistsUser = await User.findAll({ where: { email } });
-
-  if (alreadyExistsUser) {
-    res.sendStatus(409).send({ message: 'User with email already exists!' });
+  try {
+    await User.findAll({ where: { email } });
+  } catch (err) {
+    res.sendStatus(409).send(err);
   }
 
   try {
@@ -77,13 +77,14 @@ export const createUser = async (
       fullName,
     });
   } catch (err) {
+    console.log(err);
     res.sendStatus(500).send(err);
   }
 
   res.sendStatus(201).send({ message: 'Thanks for registering' });
 };
 
-export const updateFavorites = async (
+export const updateFavorites = async(
   req: Request,
   res: Response,
 ): Promise<void> => {

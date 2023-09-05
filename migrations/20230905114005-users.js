@@ -23,7 +23,6 @@ module.exports = {
       },
       favorites: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
     });
   },
