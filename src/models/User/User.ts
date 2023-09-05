@@ -3,34 +3,36 @@ import { ProductType } from '../../types';
 
 @Table({
   tableName: 'users',
+  createdAt: false,
   updatedAt: false,
 })
 export class User extends Model {
   @Column({
-    type: DataType.UUIDV4,
+    type: DataType.STRING,
     primaryKey: true,
   })
-    id: string;
-
-  @Column({
-    type: DataType.STRING,
-  })
-    email: string;
+  id: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-    password: string;
+  email: string;
+
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-    fullName: string;
+  password: string;
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  fullName: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: true,
   })
-    favorites: ProductType[];
+  favorites: ProductType[];
 }

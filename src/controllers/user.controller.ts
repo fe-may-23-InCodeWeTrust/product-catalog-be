@@ -6,6 +6,7 @@ import type { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import { generateAccessToken } from '../services/products.service';
+import { v4 as uuidv4 } from 'uuid';
 
 dotenv.config();
 
@@ -13,8 +14,9 @@ export const getOneUserById = async(
   req: Request,
   res: Response,
 ): Promise<void> => {
-  const defaultReturnObject = { authenticated: false, user: null };
   const { email, password } = req.body;
+
+  console.log(email, password);
 
   if (!email || !password) {
     res.sendStatus(400);
@@ -29,7 +31,7 @@ export const getOneUserById = async(
   });
 
   if (!foundUser) {
-    res.status(400).json(defaultReturnObject);
+    res.status(400);
 
     return;
   }
@@ -62,26 +64,30 @@ export const createUser = async(
     return;
   }
 
-  try {
-    await User.findAll({ where: { email } });
-  } catch (err) {
-    res.sendStatus(409).send(err);
+  const existingUser = await User.findOne({ where: { email } });
+
+  if (existingUser) {
+    res.sendStatus(409);
+
+    return;
   }
 
-  try {
-    const hashedPassword = await bcrypt.hash(password, 8);
+  const hashedPassword = await bcrypt.hash(password, 8);
 
-    await User.create({
-      email,
-      password: hashedPassword,
-      fullName,
-    });
-  } catch (err) {
-    console.log(err);
-    res.sendStatus(500).send(err);
+  const newUser = await User.create({
+    id: uuidv4(),
+    email,
+    password: hashedPassword,
+    fullName,
+  });
+
+  if (!newUser) {
+    res.sendStatus(500);
+
+    return;
   }
 
-  res.sendStatus(201).send({ message: 'Thanks for registering' });
+  res.send({ message: 'Thanks for registering' });
 };
 
 export const updateFavorites = async(
@@ -106,5 +112,5 @@ export const updateFavorites = async(
 
   await user?.save();
 
-  res.sendStatus(200).send('Favorites were added');
+  res.send('Favorites were added');
 };

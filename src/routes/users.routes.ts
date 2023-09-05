@@ -10,6 +10,6 @@ export const usersRoutes = express.Router();
 
 usersRoutes.post('/register', createUser);
 
-usersRoutes.get('/login', authenticateToken, getOneUserById);
+usersRoutes.get('/login', getOneUserById);
 
 usersRoutes.patch('/favorites', authenticateToken, updateFavorites);

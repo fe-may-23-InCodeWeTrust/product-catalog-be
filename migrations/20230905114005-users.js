@@ -6,7 +6,7 @@ module.exports = {
     await queryInterface.createTable('users', {
       id: {
         primaryKey: true,
-        type: Sequelize.UUID,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       email: {
@@ -22,7 +22,8 @@ module.exports = {
         allowNull: false,
       },
       favorites: {
-        type: Sequelize.STRING,
+        type: Sequelize.ARRAY(Sequelize.RANGE),
+        allowNull: true,
       },
     });
   },
