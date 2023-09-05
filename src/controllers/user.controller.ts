@@ -68,22 +68,22 @@ export const createUser = async (
     res.sendStatus(409).send({ message: 'User with email already exists!' });
   }
 
-  const hashedPassword = await bcrypt.hash(password, 8);
+  try {
+    const hashedPassword = await bcrypt.hash(password, 8);
 
-  const newUser = await User.create({
-    email,
-    password: hashedPassword,
-    fullName,
-  });
-
-  if (!newUser) {
-    res.sendStatus(500).send({ err: 'Server error' });
+    await User.create({
+      email,
+      password: hashedPassword,
+      fullName,
+    });
+  } catch (err) {
+    res.sendStatus(500).send(err);
   }
 
   res.sendStatus(201).send({ message: 'Thanks for registering' });
 };
 
-export const updateFavorites = async(
+export const updateFavorites = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
