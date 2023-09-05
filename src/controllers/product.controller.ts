@@ -17,7 +17,7 @@ export const getProductList = async(
   const {
     offset = '0',
     limit = '16',
-    productType = [],
+    productType = '',
     order = 'newest',
   } = req.query;
 
@@ -33,7 +33,7 @@ export const getProductList = async(
   }
 
   if (productType !== undefined && !productTypeOptions.includes(productType)) {
-    res.status(400).send('Invalid product type option');
+    res.send([]);
 
     return;
   }

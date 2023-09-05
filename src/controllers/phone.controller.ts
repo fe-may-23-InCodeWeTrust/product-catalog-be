@@ -27,5 +27,5 @@ export const getOneProductById = async(
     limit: 12,
   });
 
-  res.send({ foundProduct, recommended });
+  res.json({ foundProduct, recommended });
 };
