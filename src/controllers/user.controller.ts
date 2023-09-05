@@ -9,7 +9,7 @@ import { generateAccessToken } from '../services/products.service';
 
 dotenv.config();
 
-export const getOneUserById = async(
+export const getOneUserById = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
@@ -50,7 +50,7 @@ export const getOneUserById = async(
   res.send({ token, user: resEmail, favorites });
 };
 
-export const createUser = async(
+export const createUser = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
@@ -74,14 +74,13 @@ export const createUser = async(
     email,
     password: hashedPassword,
     fullName,
-  }).catch((err) => {
-    console.log('Error: ', err);
-    res.status(500).json({ error: 'Cannot register user at the moment!' });
   });
 
-  if (newUser) {
-    res.sendStatus(201).send({ message: 'Thanks for registering' });
+  if (!newUser) {
+    res.sendStatus(500).send({ err: 'Server error' });
   }
+
+  res.sendStatus(201).send({ message: 'Thanks for registering' });
 };
 
 export const updateFavorites = async(

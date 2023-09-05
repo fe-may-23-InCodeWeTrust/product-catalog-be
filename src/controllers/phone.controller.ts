@@ -4,7 +4,7 @@ import { Product } from '../models/Product';
 import { getOnePhone } from '../services/products.service';
 import type { Request, Response } from 'express';
 
-export const getOneProductById = async(
+export const getOneProductById = async (
   req: Request,
   res: Response,
 ): Promise<void> => {

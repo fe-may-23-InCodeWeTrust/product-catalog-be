@@ -16,15 +16,15 @@ export interface ProductType {
 }
 
 export interface User {
-  id:string;
+  id: string;
   password: string;
   fullName: string;
-  email:string;
+  email: string;
   createdAt: Date;
 }
 
 declare module 'express' {
   export interface Request {
-    user?: User
+    user?: User;
   }
 }

@@ -9,15 +9,15 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
 
-export const getOnePhone = async(id: string) => {
+export const getOnePhone = async (id: string) => {
   return Phone.findByPk(id);
 };
 
-export const getOneTablet = async(id: string) => {
+export const getOneTablet = async (id: string) => {
   return Tablet.findByPk(id);
 };
 
-export const getOneAccessory = async(id: string) => {
+export const getOneAccessory = async (id: string) => {
   return Accessory.findByPk(id);
 };
 
@@ -27,7 +27,11 @@ export const generateAccessToken = (email: string) => {
   return jwt.sign(email, privateKey);
 };
 
-export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
+export const authenticateToken = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const authHeader = req.headers['authorization'];
 
   const token = authHeader && authHeader.split(' ')[1];
@@ -38,15 +42,19 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
     return;
   }
 
-  jwt.verify(token, process.env.PRIVATE_KEY as string, (err: any, user: any) => {
-    console.log(err);
+  jwt.verify(
+    token,
+    process.env.PRIVATE_KEY as string,
+    (err: any, user: any) => {
+      console.log(err);
 
-    if (err) {
-      return res.sendStatus(403);
-    }
+      if (err) {
+        return res.sendStatus(403);
+      }
 
-    req.user = user;
+      req.user = user;
 
-    next();
-  });
+      next();
+    },
+  );
 };
