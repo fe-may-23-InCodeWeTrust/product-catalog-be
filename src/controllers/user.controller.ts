@@ -7,17 +7,14 @@ import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import { generateAccessToken } from '../services/products.service';
 import { v4 as uuidv4 } from 'uuid';
-import { ProductType } from '../types';
 
 dotenv.config();
 
-export const getOneUserById = async (
+export const getOneUserById = async(
   req: Request,
   res: Response,
 ): Promise<void> => {
   const { email, password } = req.body;
-
-  console.log(email, password);
 
   if (!email || !password) {
     res.sendStatus(400);
@@ -53,7 +50,7 @@ export const getOneUserById = async (
   res.send({ token, user: resEmail, id: resId });
 };
 
-export const createUser = async (
+export const createUser = async(
   req: Request,
   res: Response,
 ): Promise<void> => {
@@ -91,7 +88,7 @@ export const createUser = async (
   res.send({ message: 'Thanks for registering' });
 };
 
-export const getFavorites = async (
+export const getFavorites = async(
   req: Request,
   res: Response,
 ): Promise<void> => {
