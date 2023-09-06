@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 dotenv.config();
 
-export const getOneUserById = async (
+export const getOneUserById = async(
   req: Request,
   res: Response,
 ): Promise<void> => {
@@ -38,7 +38,7 @@ export const getOneUserById = async (
   const isMatch = await bcrypt.compare(password, hashedPassword);
 
   if (!isMatch) {
-    res.sendStatus(400);
+    res.send({ err: 'Wrong password. Please try one more time' });
 
     return;
   }
@@ -50,7 +50,7 @@ export const getOneUserById = async (
   res.send({ token, user: resEmail, id: resId });
 };
 
-export const createUser = async (
+export const createUser = async(
   req: Request,
   res: Response,
 ): Promise<void> => {
@@ -88,7 +88,7 @@ export const createUser = async (
   res.send({ message: 'Thanks for registering' });
 };
 
-export const getFavorites = async (
+export const getFavorites = async(
   req: Request,
   res: Response,
 ): Promise<void> => {
