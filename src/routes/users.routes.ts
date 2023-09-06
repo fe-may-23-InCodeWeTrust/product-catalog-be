@@ -2,7 +2,7 @@ import express from 'express';
 import {
   createUser,
   getOneUserById,
-  // updateFavorites,
+  updateFavorites,
   getFavorites,
 } from '../controllers/user.controller';
 // import { authenticateToken } from '../services/products.service';
@@ -13,6 +13,6 @@ usersRoutes.post('/register', createUser);
 
 usersRoutes.get('/login', getOneUserById);
 
-usersRoutes.get('/:userId', getFavorites);
+usersRoutes.get('/', getFavorites);
 
-// usersRoutes.patch('/favorites', updateFavorites);
+usersRoutes.patch('/favorites', updateFavorites);

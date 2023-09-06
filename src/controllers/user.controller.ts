@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 dotenv.config();
 
-export const getOneUserById = async (
+export const getOneUserById = async(
   req: Request,
   res: Response,
 ): Promise<void> => {
@@ -53,7 +53,7 @@ export const getOneUserById = async (
   res.send({ token, user: resEmail, id: resId });
 };
 
-export const createUser = async (
+export const createUser = async(
   req: Request,
   res: Response,
 ): Promise<void> => {
@@ -91,11 +91,11 @@ export const createUser = async (
   res.send({ message: 'Thanks for registering' });
 };
 
-export const getFavorites = async (
+export const getFavorites = async(
   req: Request,
   res: Response,
 ): Promise<void> => {
-  const { userId } = req.params;
+  const { userId } = req.query;
 
   console.log(userId);
 
@@ -116,48 +116,37 @@ export const getFavorites = async (
   res.send(favorites);
 };
 
-// export const updateFavorites = async (
-//   req: Request,
-//   res: Response,
-// ): Promise<void> => {
-//   const { userId } = req.query;
+export const updateFavorites = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  const { userId } = req.query;
 
-//   const { body } = req;
+  const { body } = req;
 
-//   const prepared = body.itemId;
+  const foundUser = await User.findOne({
+    where: {
+      id: userId,
+    },
+  });
 
-//   const foundUser = await User.findOne({
-//     where: {
-//       id: userId,
-//     },
-//   });
+  if (!foundUser) {
+    res.sendStatus(404);
 
-//   if (!foundUser) {
-//     res.sendStatus(404);
+    return;
+  }
 
-//     return;
-//   }
+  if (!foundUser.favorites) {
+    foundUser.favorites = [];
+  }
 
-//   if (foundUser.favorites.includes(prepared)) {
-//     foundUser.favorites = foundUser.favorites.filter(el => el !== prepared);
-//   }
+  if (foundUser.favorites.some(item => item === body.itemId)) {
+    foundUser.favorites = foundUser.favorites.filter(el => el !== body.itemId);
+  } else {
+    foundUser.favorites = [...foundUser.favorites, body.itemId];
+  }
 
-//   let arr = prepared;
+  await foundUser.save();
 
-//   if (foundUser.favorites?.length > 0) {
-//     arr = foundUser.favorites.push(prepared);
-//   }
-
-//   await User.update(
-//     {
-//       favorites: arr,
-//     },
-//     {
-//       where: {
-//         id: userId,
-//       },
-//     },
-//   );
-
-//   res.send('Favorites were added');
-// };
+  res.send('Favorites were changed');
+};
