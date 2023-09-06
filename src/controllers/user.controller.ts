@@ -11,7 +11,7 @@ import { ProductType } from '../types';
 
 dotenv.config();
 
-export const getOneUserById = async(
+export const getOneUserById = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
@@ -53,7 +53,7 @@ export const getOneUserById = async(
   res.send({ token, user: resEmail, id: resId });
 };
 
-export const createUser = async(
+export const createUser = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
@@ -91,8 +91,10 @@ export const createUser = async(
   res.send({ message: 'Thanks for registering' });
 };
 
-export const getFavorites = async(req: Request,
-  res: Response): Promise<void> => {
+export const getFavorites = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   const { userId } = req.params;
 
   console.log(userId);
@@ -114,22 +116,48 @@ export const getFavorites = async(req: Request,
   res.send(favorites);
 };
 
-export const updateFavorites = async(
-  req: Request,
-  res: Response,
-): Promise<void> => {
-  const { userId } = req.query;
+// export const updateFavorites = async (
+//   req: Request,
+//   res: Response,
+// ): Promise<void> => {
+//   const { userId } = req.query;
 
-  const { body } = req;
+//   const { body } = req;
 
-  const prepared = body.map((el: ProductType) => el.itemId);
+//   const prepared = body.itemId;
 
-  await User.update({
-    favorites: JSON.stringify(prepared),
-  },
-  { where: {
-    id: userId,
-  } });
+//   const foundUser = await User.findOne({
+//     where: {
+//       id: userId,
+//     },
+//   });
 
-  res.send('Favorites were added');
-};
+//   if (!foundUser) {
+//     res.sendStatus(404);
+
+//     return;
+//   }
+
+//   if (foundUser.favorites.includes(prepared)) {
+//     foundUser.favorites = foundUser.favorites.filter(el => el !== prepared);
+//   }
+
+//   let arr = prepared;
+
+//   if (foundUser.favorites?.length > 0) {
+//     arr = foundUser.favorites.push(prepared);
+//   }
+
+//   await User.update(
+//     {
+//       favorites: arr,
+//     },
+//     {
+//       where: {
+//         id: userId,
+//       },
+//     },
+//   );
+
+//   res.send('Favorites were added');
+// };

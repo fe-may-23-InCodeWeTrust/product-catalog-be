@@ -9,15 +9,15 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
 
-export const getOnePhone = async(id: string) => {
+export const getOnePhone = async (id: string) => {
   return Phone.findByPk(id);
 };
 
-export const getOneTablet = async(id: string) => {
+export const getOneTablet = async (id: string) => {
   return Tablet.findByPk(id);
 };
 
-export const getOneAccessory = async(id: string) => {
+export const getOneAccessory = async (id: string) => {
   return Accessory.findByPk(id);
 };
 

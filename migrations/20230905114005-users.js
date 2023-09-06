@@ -22,7 +22,7 @@ module.exports = {
         allowNull: false,
       },
       favorites: {
-        type: Sequelize.ARRAY(Sequelize.RANGE),
+        type: Sequelize.ARRAY(Sequelize.STRING),
         allowNull: true,
       },
     });

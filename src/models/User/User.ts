@@ -1,5 +1,4 @@
 import { Model, Column, Table, DataType } from 'sequelize-typescript';
-import { ProductType } from '../../types';
 
 @Table({
   tableName: 'users',
@@ -31,8 +30,8 @@ export class User extends Model {
   fullName: string;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.ARRAY(DataType.STRING),
     allowNull: true,
   })
-  favorites: string;
+  favorites: string[];
 }
