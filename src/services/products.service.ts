@@ -9,22 +9,22 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
 
-export const getOnePhone = async(id: string) => {
+export const getOnePhone = async (id: string) => {
   return Phone.findByPk(id);
 };
 
-export const getOneTablet = async(id: string) => {
+export const getOneTablet = async (id: string) => {
   return Tablet.findByPk(id);
 };
 
-export const getOneAccessory = async(id: string) => {
+export const getOneAccessory = async (id: string) => {
   return Accessory.findByPk(id);
 };
 
 export const generateAccessToken = (email: string) => {
   const privateKey = process.env.PRIVATE_KEY as string;
 
-  return jwt.sign(email, privateKey, { expiresIn: 1800 });
+  return jwt.sign(email, privateKey);
 };
 
 // export const authenticateToken = (
