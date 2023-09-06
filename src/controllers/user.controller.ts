@@ -68,7 +68,7 @@ export const createUser = async (
   const existingUser = await User.findOne({ where: { email } });
 
   if (existingUser) {
-    res.send({ err: 'You already have an account. Please log in.' });
+    res.sendStatus(409);
 
     return;
   }
