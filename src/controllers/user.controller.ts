@@ -97,8 +97,6 @@ export const getFavorites = async(
 ): Promise<void> => {
   const { userId } = req.query;
 
-  console.log(userId);
-
   const foundUser = await User.findOne({
     where: {
       id: userId,
@@ -116,7 +114,7 @@ export const getFavorites = async(
   res.send(favorites);
 };
 
-export const updateFavorites = async (
+export const updateFavorites = async(
   req: Request,
   res: Response,
 ): Promise<void> => {
