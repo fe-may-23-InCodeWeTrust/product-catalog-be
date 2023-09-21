@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 dotenv.config();
 
-export const getOneUserById = async(
+export const getOneUserById = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
@@ -53,7 +53,7 @@ export const getOneUserById = async(
   res.send({ token, user: resEmail, id: resId });
 };
 
-export const createUser = async(
+export const createUser = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
@@ -91,7 +91,7 @@ export const createUser = async(
   res.send({ message: 'Thanks for registering' });
 };
 
-export const getFavorites = async(
+export const getFavorites = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
@@ -114,7 +114,7 @@ export const getFavorites = async(
   res.send(favorites);
 };
 
-export const getUserData = async(
+export const getUserData = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
@@ -132,10 +132,10 @@ export const getUserData = async(
     return;
   }
 
-  res.send(foundUser);
+  res.json(foundUser);
 };
 
-export const updateFavorites = async(
+export const updateFavorites = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
