@@ -114,6 +114,27 @@ export const getFavorites = async(
   res.send(favorites);
 };
 
+export const getUserData = async(
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  const { userId } = req.params;
+
+  const foundUser = await User.findOne({
+    where: {
+      id: userId,
+    },
+  });
+
+  if (!foundUser) {
+    res.sendStatus(404);
+
+    return;
+  }
+
+  res.send(foundUser);
+};
+
 export const updateFavorites = async(
   req: Request,
   res: Response,
@@ -138,8 +159,10 @@ export const updateFavorites = async(
     foundUser.favorites = [];
   }
 
-  if (foundUser.favorites.some(item => item === body.itemId)) {
-    foundUser.favorites = foundUser.favorites.filter(el => el !== body.itemId);
+  if (foundUser.favorites.some((item) => item === body.itemId)) {
+    foundUser.favorites = foundUser.favorites.filter(
+      (el) => el !== body.itemId,
+    );
   } else {
     foundUser.favorites = [...foundUser.favorites, body.itemId];
   }
