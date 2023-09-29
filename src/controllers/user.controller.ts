@@ -32,7 +32,7 @@ export const getOneUserById = async (
   });
 
   if (!foundUser) {
-    res.send({ err: 'User not found. Please complete registration' });
+    res.send({ err: 'User not found. Please, complete registration' });
 
     return;
   }
